@@ -2,345 +2,1234 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estatística Eleições 2026 - Painel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2ª Seção - Estatística Eleições 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #1a365d;
-            --secondary-color: #2b6cb0;
-            --background-color: #f7fafc;
-            --card-background: #ffffff;
-            --text-color: #2d3748;
-            --border-color: #e2e8f0;
+            --primary: #0f172a;
+            --primary-light: #1e293b;
+            --accent-orange: #ff6b00;
+            --accent-orange-hover: #ea580c;
+            --accent-orange-light: rgba(255, 107, 0, 0.12);
+            --accent-orange-border: rgba(255, 107, 0, 0.35);
+            --bg: #090d16;
+            --surface: #131b2e;
+            --surface-card: #182238;
+            --surface-card-hover: #1f2c47;
+            --border: #23314d;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --badge-green-bg: rgba(16, 185, 129, 0.15);
+            --badge-green-text: #34d399;
+            --badge-green-border: rgba(16, 185, 129, 0.3);
+            --badge-orange-bg: rgba(255, 107, 0, 0.18);
+            --badge-orange-text: #fb923c;
+            --badge-orange-border: rgba(255, 107, 0, 0.4);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            --shadow-orange: 0 4px 20px -2px rgba(255, 107, 0, 0.3);
+        }
+
+        /* Tema Claro Alternativo */
+        body.theme-light {
+            --primary: #ffffff;
+            --primary-light: #f8fafc;
+            --accent-orange: #ea580c;
+            --accent-orange-hover: #c2410c;
+            --accent-orange-light: rgba(234, 88, 12, 0.1);
+            --accent-orange-border: rgba(234, 88, 12, 0.3);
+            --bg: #f1f5f9;
+            --surface: #ffffff;
+            --surface-card: #f8fafc;
+            --surface-card-hover: #f1f5f9;
+            --border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --text-dim: #94a3b8;
+            --badge-green-bg: #d1fae5;
+            --badge-green-text: #065f46;
+            --badge-green-border: #a7f3d0;
+            --badge-orange-bg: #ffedd5;
+            --badge-orange-text: #9a3412;
+            --badge-orange-border: #fed7aa;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+            --shadow-orange: 0 4px 15px -2px rgba(234, 88, 12, 0.2);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--background-color);
-            color: var(--text-color);
-            padding: 40px 20px; /* Aumentei o padding geral */
+            background-color: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 16px;
             display: flex;
             justify-content: center;
-            min-height: 100vh;
+            transition: background 0.3s ease;
         }
 
         .container {
             width: 100%;
-            max-width: 1000px; /* Aumentei a largura máxima do card */
-            background: var(--card-background);
-            border-radius: 16px; /* Bordas levemente mais arredondadas */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Sombra mais suave */
-            padding: 40px; /* Aumentei o padding interno */
-            margin-top: 50px; /* Espaço superior para centralizar */
+            max-width: 860px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
         }
 
+        @media (min-width: 640px) {
+            body {
+                padding: 32px 20px;
+            }
+            .container {
+                padding: 36px;
+            }
+        }
+
+        /* Faixa decorativa superior Laranja */
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b00, #ff9e40, #ea580c);
+        }
+
+        /* Cabeçalho */
         header {
-            text-align: center;
-            margin-bottom: 40px; /* Mais espaço abaixo do cabeçalho */
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 25px;
+            position: relative;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-orange-light);
+            border: 1px solid var(--accent-orange-border);
+            color: var(--accent-orange);
+            padding: 5px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px #22c55e;
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.2); }
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            border-radius: var(--radius-sm);
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-icon:hover {
+            color: var(--accent-orange);
+            border-color: var(--accent-orange);
+            background: var(--accent-orange-light);
         }
 
         h1 {
-            font-size: 1.5rem; /* Aumentei o tamanho da fonte do título */
-            color: var(--primary-color);
+            font-size: 1.25rem;
+            color: var(--text-main);
             font-weight: 800;
-            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+            line-height: 1.3;
             text-transform: uppercase;
         }
 
+        @media (min-width: 640px) {
+            h1 {
+                font-size: 1.45rem;
+            }
+        }
+
+        .title-accent {
+            color: var(--accent-orange);
+        }
+
         h2 {
-            font-size: 1.2rem; /* Aumentei o subtítulo */
-            color: var(--secondary-color);
-            margin-bottom: 15px;
+            font-size: 1.05rem;
+            color: var(--accent-orange);
             font-weight: 700;
+            margin-top: 4px;
+            letter-spacing: 0.04em;
         }
 
-        .update-timer {
-            font-size: 1rem; /* Timer maior */
-            color: #718096;
-            font-weight: 500;
+        .meta-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 14px;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
 
+        .timer-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            padding: 5px 12px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .timer-badge svg {
+            color: var(--accent-orange);
+        }
+
+        .btn-refresh-now {
+            background: var(--accent-orange);
+            color: #ffffff;
+            border: none;
+            padding: 7px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            box-shadow: var(--shadow-orange);
+        }
+
+        .btn-refresh-now:hover {
+            background: var(--accent-orange-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-refresh-now:active {
+            transform: translateY(0);
+        }
+
+        .btn-relatorio-pdf {
+            background: var(--surface-card);
+            color: var(--text-main);
+            border: 1px solid var(--accent-orange-border);
+            padding: 7px 13px;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-relatorio-pdf:hover {
+            background: var(--accent-orange-light);
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+            transform: translateY(-1px);
+        }
+
+        .btn-relatorio-pdf svg {
+            color: var(--accent-orange);
+        }
+
+        /* Resumo em Números Rápidos */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 640px) {
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 14px;
+            }
+        }
+
+        .stat-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            position: relative;
+            transition: border-color 0.2s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent-orange);
+        }
+
+        .stat-card.highlight {
+            border-color: var(--accent-orange-border);
+            background: linear-gradient(180deg, var(--accent-orange-light), var(--surface-card));
+        }
+
+        .stat-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-dim);
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .stat-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1;
+        }
+
+        .stat-card.highlight .stat-value {
+            color: var(--accent-orange);
+        }
+
+        /* Barra de Busca e Filtro */
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 12px 14px 12px 42px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 0 3px var(--accent-orange-light);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            pointer-events: none;
+        }
+
+        /* Visualização */
         .view {
             display: none;
+            animation: fadeIn 0.25s ease-out;
         }
 
         .view.active {
             display: block;
         }
 
-        /* Lista Principal */
-        .tipicidade-list {
-            list-style: none;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .tipicidade-item {
+        /* Lista Principal de Tipicidades */
+        .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 22px 20px; /* Aumentei o padding dos itens */
-            border-bottom: 1px solid var(--border-color);
-            transition: background 0.2s;
+            margin-bottom: 14px;
         }
 
-        .tipicidade-item:last-child {
-            border-bottom: none;
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .tipicidade-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .tipicidade-item {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            gap: 12px;
         }
 
         .tipicidade-item:hover {
-            background-color: #f8fafc;
+            background: var(--surface-card-hover);
+            border-color: var(--accent-orange);
+            transform: translateX(3px);
         }
 
-        .tipicidade-info {
-            font-size: 1.1rem; /* Fonte maior para os itens */
-            font-weight: 700;
-            color: var(--text-color);
+        .tipicidade-item-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+            flex: 1;
         }
 
-        .btn-detalhes {
-            background-color: transparent;
-            border: none;
-            color: var(--secondary-color);
-            font-weight: 700;
-            font-size: 1.1rem; /* Botão maior */
-            cursor: pointer;
-            padding: 8px 16px;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
-
-        .btn-detalhes:hover {
-            background-color: #ebf8ff;
-            text-decoration: underline;
-        }
-
-        .total-geral {
-            margin-top: 35px; /* Mais espaço */
-            text-align: right;
+        .tipicidade-count-badge {
+            min-width: 42px;
+            height: 42px;
+            border-radius: var(--radius-sm);
+            background: var(--accent-orange-light);
+            border: 1px solid var(--accent-orange-border);
+            color: var(--accent-orange);
             font-weight: 800;
-            font-size: 1.1rem; /* Total maior */
-            color: var(--primary-color);
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
-        /* Tela de Detalhes */
-        .btn-voltar {
-            background: none;
-            border: none;
-            color: var(--secondary-color);
+        .tipicidade-title-area {
+            min-width: 0;
+        }
+
+        .tipicidade-name {
+            font-size: 1.05rem;
             font-weight: 700;
-            font-size: 1.1rem; /* Botão voltar maior */
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tipicidade-sub {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            margin-top: 2px;
+        }
+
+        .btn-detalhes-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-orange-light);
+            color: var(--accent-orange);
+            border: 1px solid var(--accent-orange-border);
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .tipicidade-item:hover .btn-detalhes-action {
+            background: var(--accent-orange);
+            color: #ffffff;
+            border-color: var(--accent-orange);
+        }
+
+        /* Tela de Detalhes - Cartões Mobile-First */
+        .detail-top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn-voltar {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 0.9rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 25px;
-            padding: 10px 0;
+            padding: 9px 16px;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
         }
 
         .btn-voltar:hover {
-            text-decoration: underline;
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+            background: var(--accent-orange-light);
         }
 
         .detail-header-text {
-            font-size: 1.3rem;
-            color: var(--primary-color);
+            font-size: 1.35rem;
+            color: var(--text-main);
             font-weight: 800;
+            letter-spacing: -0.01em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-header-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
             margin-bottom: 20px;
         }
 
-        .table-responsive {
-            width: 100%;
+        /* Filtros rápidos na tela de detalhes */
+        .detail-filters {
+            display: flex;
+            gap: 8px;
             overflow-x: auto;
-            margin-top: 15px;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            scrollbar-width: thin;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 1rem; /* Fonte da tabela maior */
-            text-align: left;
+        .filter-chip {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            cursor: pointer;
             white-space: nowrap;
-            background-color: white;
+            transition: all 0.2s;
         }
 
-        th, td {
-            padding: 16px 14px; /* Células maiores */
-            border-bottom: 1px solid var(--border-color);
+        .filter-chip:hover {
+            color: var(--text-main);
+            border-color: var(--text-dim);
         }
 
-        th {
-            background-color: #edf2f7; /* Fundo do cabeçalho da tabela */
-            color: var(--primary-color);
+        .filter-chip.active {
+            background: var(--accent-orange);
+            color: #ffffff;
+            border-color: var(--accent-orange);
+        }
+
+        /* Grid de Cards de Detalhes (Visualização Mobile Primária) */
+        .occurrences-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .occurrence-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            transition: all 0.2s ease;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .occurrence-card:hover {
+            border-color: var(--accent-orange);
+            background: var(--surface-card-hover);
+        }
+
+        .occurrence-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            gap: 8px;
+        }
+
+        .opm-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary-light);
+            border: 1px solid var(--border);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 5px 12px;
+            border-radius: var(--radius-sm);
+            letter-spacing: 0.02em;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .status-badge.finalizada {
+            background: var(--badge-green-bg);
+            color: var(--badge-green-text);
+            border: 1px solid var(--badge-green-border);
+        }
+
+        .status-badge.andamento {
+            background: var(--badge-orange-bg);
+            color: var(--badge-orange-text);
+            border: 1px solid var(--badge-orange-border);
+        }
+
+        .occurrence-location {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 14px;
+            line-height: 1.3;
+        }
+
+        .location-icon {
+            color: var(--accent-orange);
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .occurrence-info-rows {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            background: var(--primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+        }
+
+        .info-col {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .info-col-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-dim);
+            letter-spacing: 0.05em;
+        }
+
+        .info-col-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .eleicao-sim {
+            color: var(--accent-orange);
+            font-weight: 800;
+        }
+
+        .eleicao-nao {
+            color: var(--text-muted);
+        }
+
+        /* Rodapé de total */
+        .total-banner {
+            margin-top: 24px;
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: var(--text-main);
+            border-left: 4px solid var(--accent-orange);
+        }
+
+        .total-number {
+            color: var(--accent-orange);
+            font-size: 1.25rem;
+        }
+
+        /* Estados de Carregamento e Vazio */
+        .state-box {
+            text-align: center;
+            padding: 48px 20px;
+            color: var(--text-muted);
+        }
+
+        .spinner {
+            width: 38px;
+            height: 38px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent-orange);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            margin-bottom: 20px;
             font-size: 0.9rem;
         }
 
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        .loading, .error {
-            text-align: center;
-            padding: 60px;
-            color: #718096;
-            font-size: 1.1rem;
-        }
-
-        .error {
-            color: #e53e3e;
+        /* Responsividade para telas muito pequenas */
+        @media (max-width: 480px) {
+            .occurrence-info-rows {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
-</head>
+<script src="/_aistudio-iframe.js?v=2c34bde1"></script></head>
 <body>
 
     <div class="container">
         <header>
-            <h1>2ª SEÇÃO - ESTATÍSTICA E CIÊNCIA APLICADA</h1>
-            <h2>ELEIÇÕES 2026</h2>
-            <div class="update-timer" id="timer">Atualiza em 3 minutos</div>
+            <div class="header-top">
+                <div class="header-badge">
+                    <span class="live-dot"></span>
+                    <span>2ª Seção · EMG</span>
+                </div>
+                <div class="header-actions">
+                    <a href="./relatorio-final-eleicoes-2026.pdf" download="relatorio-final-eleicoes-2026.pdf" target="_blank" class="btn-relatorio-pdf" id="btn-relatorio-link" onclick="lidarCliqueRelatorio(event)" title="Baixar Relatório Oficial ao término das eleições (PDF)">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="12" y2="18"></line><line x1="15" y1="15" x2="12" y2="18"></line></svg>
+                        <span>Relatório Final (PDF)</span>
+                    </a>
+                    <button class="btn-icon" id="btn-toggle-theme" title="Alternar Modo Noturno / Claro" onclick="alternarTema()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    </button>
+                    <button class="btn-refresh-now" onclick="forcarAtualizacao()">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="refresh-icon"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                        <span>Atualizar</span>
+                    </button>
+                </div>
+            </div>
+
+            <h1>ESTATÍSTICA E CIÊNCIA APLICADA</h1>
+            <h2><span class="title-accent">&#9679;</span> ELEIÇÕES 2026</h2>
+
+            <div class="meta-bar">
+                <div class="timer-badge">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span id="timer">Atualizando em 3:00</span>
+                </div>
+                <div id="last-sync" style="font-size: 0.8rem; color: var(--text-dim);">Sincronizando...</div>
+            </div>
         </header>
 
-        <!-- TELA 1: LISTAGEM DE TIPICIDADES -->
+        <!-- Mensagem de Erro (se houver) -->
+        <div id="error-message" style="display: none;" class="error-box"></div>
+
+        <!-- TELA 1: LISTA PRINCIPAL -->
         <div id="main-view" class="view active">
-            <div id="content-loading" class="loading">Carregando dados...</div>
+            <!-- Números Rápidos / Resumo -->
+            <div class="stats-grid">
+                <div class="stat-card highlight">
+                    <div class="stat-label">Total Ocorrências</div>
+                    <div class="stat-value" id="stat-total">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Tipicidades</div>
+                    <div class="stat-value" id="stat-tipos">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Rel. Eleição</div>
+                    <div class="stat-value" id="stat-eleicao" style="color: var(--accent-orange);">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Em Andamento</div>
+                    <div class="stat-value" id="stat-andamento" style="color: #fb923c;">0</div>
+                </div>
+            </div>
+
+            <!-- Campo de Busca Rápida -->
+            <div class="search-box">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="search-input" class="search-input" placeholder="Filtrar por tipicidade..." oninput="filtrarTipicidades()">
+            </div>
+
+            <div class="section-header">
+                <div class="section-title">Ocorrências por Tipicidade</div>
+                <div id="section-count" style="font-size: 0.8rem; color: var(--text-dim); font-weight: 600;"></div>
+            </div>
+
+            <div id="content-loading" class="state-box">
+                <div class="spinner"></div>
+                <p>Carregando dados da 2ª Seção...</p>
+            </div>
+
             <ul id="tipicidade-list" class="tipicidade-list"></ul>
-            <div id="total-geral" class="total-geral"></div>
+
+            <div id="total-geral" class="total-banner" style="display: none;">
+                <span>Total de Ocorrências Registradas</span>
+                <span class="total-number" id="total-geral-num">0</span>
+            </div>
         </div>
 
-        <!-- TELA 2: DETALHES DA TIPICIDADE -->
+        <!-- TELA 2: DETALHES MOBILE-FIRST (CARTÕES) -->
         <div id="detail-view" class="view">
-            <button class="btn-voltar" onclick="voltarParaPrincipal()">&#8592; Voltar</button>
-            <h3 id="detail-title" class="detail-header-text">Detalhes</h3>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>OPM</th>
-                            <th>Local</th>
-                            <th>Status</th>
-                            <th>Rel/Elei</th>
-                            <th>Hora/Final</th>
-                        </tr>
-                    </thead>
-                    <tbody id="detail-table-body">
-                        <!-- Preenchido via JavaScript -->
-                    </tbody>
-                </table>
+            <div class="detail-top-nav">
+                <button class="btn-voltar" onclick="voltarParaPrincipal()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <span>Voltar para Lista</span>
+                </button>
+                <div class="timer-badge" id="detail-count-badge">
+                    0 registros
+                </div>
             </div>
-            <div id="detail-total" class="total-geral"></div>
+
+            <h3 id="detail-title" class="detail-header-text">Detalhes</h3>
+            <p class="detail-header-sub">Detalhes da ocorrência.</p>
+
+            <!-- Filtros rápidos na tela de detalhes -->
+            <div class="detail-filters">
+                <button class="filter-chip active" onclick="filtrarStatusDetalhes('todos', this)">Todos</button>
+                <button class="filter-chip" onclick="filtrarStatusDetalhes('andamento', this)">Em Andamento</button>
+                <button class="filter-chip" onclick="filtrarStatusDetalhes('finalizada', this)">Finalizadas</button>
+                <button class="filter-chip" onclick="filtrarStatusDetalhes('eleicao_sim', this)">Rel. Eleição (Sim)</button>
+            </div>
+
+            <!-- Lista de Cartões (Substitui a tabela antiga para perfeita visualização no celular) -->
+            <div id="occurrences-container" class="occurrences-grid">
+                <!-- Preenchido via JavaScript em cartões legíveis -->
+            </div>
+
+            <div id="detail-total-banner" class="total-banner">
+                <span>Total nesta tipicidade</span>
+                <span class="total-number" id="detail-total-num">0</span>
+            </div>
         </div>
     </div>
 
     <script>
-        // COLE AQUI O URL DO SEU APP DA WEB GERADO NO APPS SCRIPT:
+        // URL da API Google Apps Script fornecida:
         const API_URL = 'https://script.google.com/macros/s/AKfycbwV4Y93dDqcgH-R3oyzHmbl4LpmGvrDE_C0Mad51ZTq-iT85UcUWAAchxwqvt77NT2V/exec';
 
         let dadosGlobais = [];
-        let tempoRestante = 180; // 3 minutos em segundos
+        let tipicidadeAtual = '';
+        let filtroStatusAtual = 'todos';
+        let tempoRestante = 180; // 3 minutos
+        let timerInterval = null;
 
-        async function carregarDados() {
+        async function carregarDados(silencioso = false) {
+            const loadingEl = document.getElementById('content-loading');
+            const refreshIcon = document.getElementById('refresh-icon');
+            const errorEl = document.getElementById('error-message');
+            
+            if (refreshIcon) refreshIcon.style.animation = 'spin 0.7s linear infinite';
+            if (!silencioso && dadosGlobais.length === 0) {
+                loadingEl.style.display = 'block';
+            }
+
             try {
                 const response = await fetch(API_URL);
-                if (!response.ok) throw new Error('Erro ao acessar os dados.');
+                if (!response.ok) throw new Error('Falha na resposta do servidor.');
                 
-                dadosGlobais = await response.json();
+                const data = await response.json();
+                dadosGlobais = Array.isArray(data) ? data : [];
+                
+                errorEl.style.display = 'none';
+                loadingEl.style.display = 'none';
+
+                atualizarResumoEstatisticas();
                 renderizarListaPrincipal();
-                
-                document.getElementById('content-loading').style.display = 'none';
+
+                // Se estiver com os detalhes abertos, atualiza a tela de detalhes também
+                if (document.getElementById('detail-view').classList.contains('active') && tipicidadeAtual) {
+                    renderizarCartoesDetalhes();
+                }
+
+                const agora = new Date();
+                const horaFormatada = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                document.getElementById('last-sync').innerText = `Sincronizado às ${horaFormatada}`;
+
             } catch (error) {
-                console.error(error);
-                document.getElementById('content-loading').innerHTML = '<span class="error">Erro ao carregar dados. Verifique a URL do Web App no script.</span>';
+                console.error('Erro ao carregar dados:', error);
+                loadingEl.style.display = 'none';
+                
+                // Se houver erro de rede, mostrar aviso amigável sem quebrar a tela
+                if (dadosGlobais.length === 0) {
+                    errorEl.style.display = 'block';
+                    errorEl.innerHTML = `<strong>Atenção:</strong> Não foi possível sincronizar no momento. Tentando novamente em instantes...`;
+                }
+            } finally {
+                if (refreshIcon) refreshIcon.style.animation = 'none';
             }
+        }
+
+        function forcarAtualizacao() {
+            tempoRestante = 180;
+            atualizarTextoTimer();
+            carregarDados(false);
+        }
+
+        function atualizarResumoEstatisticas() {
+            const total = dadosGlobais.length;
+            const tipicidadesUnicas = new Set(dadosGlobais.map(i => i.tipicidade)).size;
+            
+            const relEleicao = dadosGlobais.filter(i => {
+                const val = (i.relEleicao || '').trim().toLowerCase();
+                return val === 'sim' || val === 's';
+            }).length;
+
+            const emAndamento = dadosGlobais.filter(i => {
+                const val = (i.status || '').trim().toLowerCase();
+                return val.includes('andamento');
+            }).length;
+
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-tipos').innerText = tipicidadesUnicas;
+            document.getElementById('stat-eleicao').innerText = relEleicao;
+            document.getElementById('stat-andamento').innerText = emAndamento;
         }
 
         function renderizarListaPrincipal() {
             const listaEl = document.getElementById('tipicidade-list');
+            const termoBusca = (document.getElementById('search-input').value || '').trim().toLowerCase();
             listaEl.innerHTML = '';
 
-            // Agrupar por Tipicidade
+            // Agrupamento por Tipicidade
             const agrupado = {};
             dadosGlobais.forEach(item => {
-                if (!agrupado[item.tipicidade]) {
-                    agrupado[item.tipicidade] = [];
-                }
-                agrupado[item.tipicidade].push(item);
+                const key = item.tipicidade || 'Outros';
+                if (!agrupado[key]) agrupado[key] = [];
+                agrupado[key].push(item);
             });
 
-            let totalOcorrencias = 0;
+            const chaves = Object.keys(agrupado).sort((a, b) => {
+                // Ordenar primeiro por maior quantidade, depois por nome
+                const diff = agrupado[b].length - agrupado[a].length;
+                if (diff !== 0) return diff;
+                return a.localeCompare(b);
+            });
 
-            // Ordenar alfabeticamente as chaves (tipicidades) para melhor visualização
-            const chavesOrdenadas = Object.keys(agrupado).sort();
+            let totalFiltrado = 0;
+            let tiposExibidos = 0;
 
-            chavesOrdenadas.forEach(tipicidade => {
+            chaves.forEach(tipicidade => {
                 const itens = agrupado[tipicidade];
                 const qtd = itens.length;
-                totalOcorrencias += qtd;
+
+                if (termoBusca && !tipicidade.toLowerCase().includes(termoBusca)) {
+                    return;
+                }
+
+                totalFiltrado += qtd;
+                tiposExibidos++;
+
+                // Subtexto informativo: quantas em andamento ou ligadas à eleição
+                const andamentoQtd = itens.filter(i => (i.status || '').toLowerCase().includes('andamento')).length;
+                const eleicaoQtd = itens.filter(i => (i.relEleicao || '').toLowerCase() === 'sim').length;
+                
+                let subInfo = `${qtd} registro${qtd !== 1 ? 's' : ''}`;
+                if (andamentoQtd > 0) subInfo += ` · <span style="color: #fb923c;">${andamentoQtd} em andamento</span>`;
+                if (eleicaoQtd > 0) subInfo += ` · <span style="color: var(--accent-orange);">${eleicaoQtd} rel. eleição</span>`;
 
                 const li = document.createElement('li');
                 li.className = 'tipicidade-item';
+                li.onclick = () => abrirDetalhes(tipicidade);
                 li.innerHTML = `
-                    <span class="tipicidade-info">${qtd} ${tipicidade}</span>
-                    <button class="btn-detalhes" onclick="abrirDetalhes('${tipicidade.replace(/'/g, "\\'")}')">Detalhes</button>
+                    <div class="tipicidade-item-left">
+                        <div class="tipicidade-count-badge">${qtd}</div>
+                        <div class="tipicidade-title-area">
+                            <div class="tipicidade-name">${escapeHtml(tipicidade)}</div>
+                            <div class="tipicidade-sub">${subInfo}</div>
+                        </div>
+                    </div>
+                    <button class="btn-detalhes-action" aria-label="Ver detalhes de ${escapeHtml(tipicidade)}">
+                        <span>Detalhes</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
                 `;
                 listaEl.appendChild(li);
             });
 
-            document.getElementById('total-geral').innerText = `Total de ${totalOcorrencias} Ocorrência${totalOcorrencias !== 1 ? 's' : ''}`;
+            document.getElementById('section-count').innerText = `${tiposExibidos} categorias encontradas`;
+
+            const totalBanner = document.getElementById('total-geral');
+            const totalNum = document.getElementById('total-geral-num');
+            totalBanner.style.display = 'flex';
+            totalNum.innerText = totalFiltrado;
+        }
+
+        function filtrarTipicidades() {
+            renderizarListaPrincipal();
         }
 
         function abrirDetalhes(tipicidade) {
-            document.getElementById('main-view').classList.remove('active');
-            document.getElementById('detail-view').classList.add('active');
-            document.getElementById('detail-title').innerText = `Detalhes - ${tipicidade}`;
+            tipicidadeAtual = tipicidade;
+            filtroStatusAtual = 'todos';
 
-            const tbody = document.getElementById('detail-table-body');
-            tbody.innerHTML = '';
-
-            const filtrados = dadosGlobais.filter(item => item.tipicidade === tipicidade);
-
-            filtrados.forEach(item => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${item.opm}</td>
-                    <td>${item.local}</td>
-                    <td>${item.status}</td>
-                    <td>${item.relEleicao}</td>
-                    <td>${item.horaFinal}</td>
-                `;
-                tbody.appendChild(tr);
+            // Resetar botões de filtro
+            document.querySelectorAll('.filter-chip').forEach((btn, idx) => {
+                if (idx === 0) btn.classList.add('active');
+                else btn.classList.remove('active');
             });
 
-            document.getElementById('detail-total').innerText = `Total ${filtrados.length} Ocorrência${filtrados.length !== 1 ? 's' : ''}`;
+            document.getElementById('main-view').classList.remove('active');
+            document.getElementById('detail-view').classList.add('active');
+            document.getElementById('detail-title').innerHTML = `
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                ${escapeHtml(tipicidade)}
+            `;
+
+            renderizarCartoesDetalhes();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function filtrarStatusDetalhes(filtro, elementoBtn) {
+            filtroStatusAtual = filtro;
+            document.querySelectorAll('.filter-chip').forEach(btn => btn.classList.remove('active'));
+            if (elementoBtn) elementoBtn.classList.add('active');
+            renderizarCartoesDetalhes();
+        }
+
+        /* Renderização dos Cartões Mobile-First (Sem tabela que espreme o conteúdo) */
+        function renderizarCartoesDetalhes() {
+            const container = document.getElementById('occurrences-container');
+            container.innerHTML = '';
+
+            let ocorrencias = dadosGlobais.filter(item => item.tipicidade === tipicidadeAtual);
+
+            // Aplicação dos filtros rápidos
+            if (filtroStatusAtual === 'andamento') {
+                ocorrencias = ocorrencias.filter(item => (item.status || '').toLowerCase().includes('andamento'));
+            } else if (filtroStatusAtual === 'finalizada') {
+                ocorrencias = ocorrencias.filter(item => (item.status || '').toLowerCase().includes('finaliz'));
+            } else if (filtroStatusAtual === 'eleicao_sim') {
+                ocorrencias = ocorrencias.filter(item => (item.relEleicao || '').trim().toLowerCase() === 'sim');
+            }
+
+            document.getElementById('detail-count-badge').innerText = `${ocorrencias.length} registro${ocorrencias.length !== 1 ? 's' : ''}`;
+            document.getElementById('detail-total-num').innerText = `${ocorrencias.length} Ocorrência${ocorrencias.length !== 1 ? 's' : ''}`;
+
+            if (ocorrencias.length === 0) {
+                container.innerHTML = `
+                    <div class="state-box" style="background: var(--surface-card); border-radius: var(--radius-md); border: 1px dashed var(--border);">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--text-dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 10px;"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                        <p>Nenhuma ocorrência encontrada para este filtro.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            ocorrencias.forEach((item, index) => {
+                const statusTexto = (item.status || 'Não informado').trim();
+                const isFinalizada = statusTexto.toLowerCase().includes('finaliz');
+                const isAndamento = statusTexto.toLowerCase().includes('andamento');
+
+                const statusClass = isFinalizada ? 'finalizada' : (isAndamento ? 'andamento' : 'finalizada');
+                const statusIcon = isFinalizada 
+                    ? `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`
+                    : `<span class="live-dot" style="width: 6px; height: 6px; background-color: #fb923c; box-shadow: 0 0 8px #fb923c;"></span>`;
+
+                const relEleicaoTexto = (item.relEleicao || 'Não').trim();
+                const isRelEleicao = relEleicaoTexto.toLowerCase() === 'sim';
+                
+                const horaFinalTexto = (item.horaFinal && item.horaFinal.trim()) ? item.horaFinal.trim() : (isAndamento ? 'Em aberto' : 'Não informada');
+
+                const card = document.createElement('div');
+                card.className = 'occurrence-card';
+                card.innerHTML = `
+                    <!-- Topo do Card: OPM e Status -->
+                    <div class="occurrence-card-header">
+                        <div class="opm-badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            <span>${escapeHtml(item.opm || 'OPM')}</span>
+                        </div>
+                        <span class="status-badge ${statusClass}">
+                            ${statusIcon}
+                            ${escapeHtml(statusTexto)}
+                        </span>
+                    </div>
+
+                    <!-- Local do Fato em Destaque Alto -->
+                    <div class="occurrence-location">
+                        <svg class="location-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span>${escapeHtml(item.local || 'Local não informado')}</span>
+                    </div>
+
+                    <!-- Dados Principais em Grade Visível no Telefone -->
+                    <div class="occurrence-info-rows">
+                        <div class="info-col">
+                            <span class="info-col-label">Relacionada à Eleição</span>
+                            <span class="info-col-value ${isRelEleicao ? 'eleicao-sim' : 'eleicao-nao'}">
+                                ${isRelEleicao ? '&#9679; SIM (Eleitoral)' : 'NÃO'}
+                            </span>
+                        </div>
+                        <div class="info-col">
+                            <span class="info-col-label">Hora Término / Conclusão</span>
+                            <span class="info-col-value">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                ${escapeHtml(horaFinalTexto)}
+                            </span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
         }
 
         function voltarParaPrincipal() {
             document.getElementById('detail-view').classList.remove('active');
             document.getElementById('main-view').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function atualizarTextoTimer() {
+            const minutos = Math.floor(tempoRestante / 60);
+            const segundos = tempoRestante % 60;
+            const formatado = `${minutos}:${segundos < 10 ? '0' : ''}${segundos}`;
+            document.getElementById('timer').innerText = `Atualizando em ${formatado}`;
         }
 
         function iniciarTemporizador() {
-            setInterval(() => {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
                 tempoRestante--;
                 if (tempoRestante <= 0) {
-                    tempoRestante = 180; // Reinicia o timer
-                    carregarDados(); // Atualiza os dados
+                    tempoRestante = 180;
+                    carregarDados(true);
                 }
-                const minutos = Math.floor(tempoRestante / 60);
-                const segundos = tempoRestante % 60;
-                document.getElementById('timer').innerText = `Atualiza em ${minutos}m ${segundos < 10 ? '0' : ''}${segundos}s`;
+                atualizarTextoTimer();
             }, 1000);
         }
 
+        function alternarTema() {
+            document.body.classList.toggle('theme-light');
+            const isLight = document.body.classList.contains('theme-light');
+            try {
+                localStorage.setItem('painel_eleicoes_tema', isLight ? 'light' : 'dark');
+            } catch (e) {}
+        }
+
+        function carregarTemaSalvo() {
+            try {
+                const salvo = localStorage.getItem('painel_eleicoes_tema');
+                if (salvo === 'light') {
+                    document.body.classList.add('theme-light');
+                }
+            } catch (e) {}
+        }
+
+        function escapeHtml(texto) {
+            if (!texto) return '';
+            return String(texto)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        async function lidarCliqueRelatorio(e) {
+            const link = e.currentTarget;
+            try {
+                const resp = await fetch(link.getAttribute('href'), { method: 'HEAD' });
+                if (!resp.ok && resp.status === 404) {
+                    e.preventDefault();
+                    alert('📋 Relatório Final das Eleições 2026:\n\nPara disponibilizar o download do relatório:\n1. Nomeie seu arquivo como "relatorio-final-eleicoes-2026.pdf"\n2. Coloque-o na mesma pasta (raiz) do seu repositório no GitHub.\n3. O botão fará o download direto automaticamente!');
+                }
+            } catch (err) {
+                // Se der erro de CORS ou offline, deixa o navegador tentar abrir o link normalmente
+            }
+        }
+
         // Inicialização
+        carregarTemaSalvo();
         carregarDados();
         iniciarTemporizador();
     </script>
