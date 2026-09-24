@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatística Eleições 2026 - Painel</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --background-color: #f7fafc;
+            --card-background: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 1rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .update-timer {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        .tipicidade-list {
+            list-style: none;
+        }
+
+        .tipicidade-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.2s;
+        }
+
+        .tipicidade-item:hover {
+            background-color: #f8fafc;
+        }
+
+        .tipicidade-info {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .btn-detalhes {
+            background-color: transparent;
+            border: none;
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .btn-detalhes:hover {
+            background-color: #ebf8ff;
+            text-decoration: underline;
+        }
+
+        .total-geral {
+            margin-top: 20px;
+            text-align: right;
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: var(--primary-color);
+        }
+
+        .btn-voltar {
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+            padding: 5px 0;
+        }
+
+        .btn-voltar:hover {
+            text-decoration: underline;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .loading, .error {
+            text-align: center;
+            padding: 30px;
+            color: #718096;
+            font-size: 0.95rem;
+        }
+
+        .error {
+            color: #e53e3e;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>2ª Seção - Estatística e Ciência Aplicada</h1>
+            <h2>ELEIÇÕES 2026</h2>
+            <div class="update-timer" id="timer">Atualiza em 3 minutos</div>
+        </header>
+
+        <!-- TELA 1: LISTAGEM DE TIPICIDADES -->
+        <div id="main-view" class="view active">
+            <div id="content-loading" class="loading">Carregando dados da planilha...</div>
+            <ul id="tipicidade-list" class="tipicidade-list"></ul>
+            <div id="total-geral" class="total-geral"></div>
+        </div>
+
+        <!-- TELA 2: DETALHES DA TIPICIDADE -->
+        <div id="detail-view" class="view">
+            <button class="btn-voltar" onclick="voltarParaPrincipal()">&#8592; Voltar</button>
+            <h3 id="detail-title" style="margin-bottom: 10px; color: var(--primary-color); font-size: 1.05rem;">Detalhes</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>OPM</th>
+                            <th>Local</th>
+                            <th>Status</th>
+                            <th>Rel/Eleição</th>
+                            <th>Hora/Final</th>
+                        </tr>
+                    </thead>
+                    <tbody id="detail-table-body">
+                        <!-- Preenchido via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="detail-total" class="total-geral"></div>
+        </div>
+    </div>
+
+    <script>
+        // COLE AQUI O URL DO SEU APP DA WEB GERADO NO APPS SCRIPT:
+        const API_URL = 'https://script.google.com/macros/s/AKfycbwV4Y93dDqcgH-R3oyzHmbl4LpmGvrDE_C0Mad51ZTq-iT85UcUWAAchxwqvt77NT2V/exec';
+
+        let dadosGlobais = [];
+        let tempoRestante = 180; // 3 minutos em segundos
+
+        async function carregarDados() {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error('Erro ao acessar os dados.');
+                
+                dadosGlobais = await response.json();
+                renderizarListaPrincipal();
+                
+                document.getElementById('content-loading').style.display = 'none';
+            } catch (error) {
+                console.error(error);
+                document.getElementById('content-loading').innerHTML = '<span class="error">Erro ao carregar dados. Verifique a URL do Web App.</span>';
+            }
+        }
+
+        function renderizarListaPrincipal() {
+            const listaEl = document.getElementById('tipicidade-list');
+            listaEl.innerHTML = '';
+
+            const agrupado = {};
+            dadosGlobais.forEach(item => {
+                if (!agrupado[item.tipicidade]) {
+                    agrupado[item.tipicidade] = [];
+                }
+                agrupado[item.tipicidade].push(item);
+            });
+
+            let totalOcorrencias = 0;
+
+            for (const [tipicidade, itens] of Object.entries(agrupado)) {
+                const qtd = itens.length;
+                totalOcorrencias += qtd;
+
+                const li = document.createElement('li');
+                li.className = 'tipicidade-item';
+                li.innerHTML = `
+                    <span class="tipicidade-info">${qtd} ${tipicidade}</span>
+                    <button class="btn-detalhes" onclick="abrirDetalhes('${tipicidade}')">Detalhes</button>
+                `;
+                listaEl.appendChild(li);
+            }
+
+            document.getElementById('total-geral').innerText = `Total de ${totalOcorrencias} Ocorrência${totalOcorrencias !== 1 ? 's' : ''}`;
+        }
+
+        function abrirDetalhes(tipicidade) {
+            document.getElementById('main-view').classList.remove('active');
+            document.getElementById('detail-view').classList.add('active');
+            document.getElementById('detail-title').innerText = `Detalhes - ${tipicidade}`;
+
+            const tbody = document.getElementById('detail-table-body');
+            tbody.innerHTML = '';
+
+            const filtrados = dadosGlobais.filter(item => item.tipicidade === tipicidade);
+
+            filtrados.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.opm}</td>
+                    <td>${item.local}</td>
+                    <td>${item.status}</td>
+                    <td>${item.relEleicao}</td>
+                    <td>${item.horaFinal}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('detail-total').innerText = `Total ${filtrados.length} Ocorrência${filtrados.length !== 1 ? 's' : ''}`;
+        }
+
+        function voltarParaPrincipal() {
+            document.getElementById('detail-view').classList.remove('active');
+            document.getElementById('main-view').classList.add('active');
+        }
+
+        function iniciarTemporizador() {
+            setInterval(() => {
+                tempoRestante--;
+                if (tempoRestante <= 0) {
+                    tempoRestante = 180;
+                    carregarDados();
+                }
+                const minutos = Math.floor(tempoRestante / 60);
+                const segundos = tempoRestante % 60;
+                document.getElementById('timer').innerText = `Atualiza em ${minutos}m ${segundos < 10 ? '0' : ''}${segundos}s`;
+            }, 1000);
+        }
+
+        carregarDados();
+        iniciarTemporizador();
+    </script>
+</body>
+</html>
